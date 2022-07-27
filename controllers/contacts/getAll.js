@@ -1,14 +1,9 @@
-const { Contact } = require("../../models");
+const { basedir } = global;
+const { Contact } = require(`${basedir}/models`);
 
 const getAll = async (req, res) => {
-    const contacts = await Contact.find({});
-    res.json({
-        status: "success",
-        code: 200,
-        data: {
-            result: contacts,
-        },
-    });
+    const result = await Contact.find({}, "-createdAt -updatedAt");
+    res.json(result);
 };
 
 module.exports = getAll;
