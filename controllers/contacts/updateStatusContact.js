@@ -1,6 +1,7 @@
-const { NotFound } = require("http-errors");
+const { basedir } = global;
+const { createError } = require(`${basedir}/helpers`);
 
-const { Contact } = require("../../models");
+const { Contact } = require(`${basedir}/models`);
 
 const updateStatusContact = async (req, res) => {
     const { contactId } = req.params;
@@ -13,15 +14,9 @@ const updateStatusContact = async (req, res) => {
         },
     );
     if (!result) {
-        throw new NotFound(`Contact missing field favorite`);
+        throw createError(404);
     }
-    res.json({
-        status: "success",
-        code: 200,
-        data: {
-            result,
-        },
-    });
+    res.json(result);
 };
 
 module.exports = updateStatusContact;

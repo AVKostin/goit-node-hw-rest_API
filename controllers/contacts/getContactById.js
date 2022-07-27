@@ -1,24 +1,15 @@
-const { NotFound } = require("http-errors");
+const { basedir } = global;
+const { Contact } = require(`${basedir}/models`);
 
-const { Contact } = require("../../models");
+const { createError } = require(`${basedir}/helpers`);
 
 const getById = async (req, res) => {
     const { contactId } = req.params;
     const result = await Contact.findById(contactId);
-    console.log(result);
-
-    //
-
     if (!result) {
-        throw new NotFound(`Contact with id=${contactId} not found`);
+        throw createError(404);
     }
-    res.json({
-        status: "success",
-        code: 200,
-        data: {
-            result,
-        },
-    });
+    res.json(result);
 };
 
 module.exports = getById;
