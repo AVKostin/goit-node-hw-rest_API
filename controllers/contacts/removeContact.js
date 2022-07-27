@@ -1,20 +1,16 @@
-const { NotFound } = require("http-errors");
+const { basedir } = global;
+const { Contact } = require(`${basedir}/models`);
 
-const { Contact } = require("../../models");
+const { createError } = require(`${basedir}/helpers`);
 
 const removeById = async (req, res) => {
     const { contactId } = req.params;
     const result = await Contact.findByIdAndRemove(contactId);
     if (!result) {
-        throw new NotFound(`Product with id=${contactId} not found`);
+        throw createError(404);
     }
     res.json({
-        status: "success",
-        code: 200,
-        message: "product deleted",
-        data: {
-            result,
-        },
+        message: "Contact deleted",
     });
 };
 
