@@ -6,8 +6,8 @@ const contactSchema = Schema(
         name: {
             type: String,
             required: [true, "Set name for contact"],
-            // minlength:2,
-            // maxlength: 50
+            minlength: 2,
+            maxlength: 50,
         },
         email: {
             type: String,
@@ -36,10 +36,14 @@ const favoriteJoiSchema = Joi.object({
     favorite: Joi.boolean().required(),
 });
 
+const schemas = {
+    add: joiSchema,
+    updateFavorite: favoriteJoiSchema,
+};
+
 const Contact = model("contact", contactSchema);
 
 module.exports = {
     Contact,
-    joiSchema,
-    favoriteJoiSchema,
+    schemas,
 };

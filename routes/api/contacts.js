@@ -1,8 +1,10 @@
 const express = require("express");
 
-const { validation, ctrlWrapper } = require("../../middlewares");
-const { joiSchema, favoriteJoiSchema } = require("../../models/contact");
-const { contacts: ctrl } = require("../../controllers");
+const { basedir } = global;
+
+const { validation, ctrlWrapper } = require(`${basedir}/middlewares`);
+const { schemas } = require(`${basedir}/models/contact`);
+const { contacts: ctrl } = require(`${basedir}/controllers`);
 
 const router = express.Router();
 
@@ -10,17 +12,17 @@ router.get("/", ctrlWrapper(ctrl.getAll));
 
 router.get("/:contactId", ctrlWrapper(ctrl.getById));
 
-router.post("/", validation(joiSchema), ctrlWrapper(ctrl.addContact));
+router.post("/", validation(schemas.add), ctrlWrapper(ctrl.addContact));
 
 router.put(
     "/:contactId",
-    validation(joiSchema),
+    validation(schemas.add),
     ctrlWrapper(ctrl.updateContact),
 );
 
 router.patch(
     "/:contactId/favorite",
-    validation(favoriteJoiSchema),
+    validation(schemas.updateFavorite),
     ctrlWrapper(ctrl.updateStatusContact),
 );
 
