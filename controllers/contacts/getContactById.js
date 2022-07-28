@@ -1,5 +1,5 @@
 const { basedir } = global;
-const { Contact } = require(`${basedir}/models`);
+const { Contact } = require(`${basedir}/models/contact`);
 
 const { createError } = require(`${basedir}/helpers`);
 
