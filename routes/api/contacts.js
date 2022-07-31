@@ -1,7 +1,11 @@
 const express = require("express");
 
 const { basedir } = global;
-const { auth, ctrlWrapper } = require(`${basedir}/middlewares`);
+
+const { auth } = require(`${basedir}/middlewares`);
+
+const { ctrlWrapper } = require(`${basedir}/helpers`);
+
 const { contacts: ctrl } = require(`${basedir}/controllers`);
 
 const router = express.Router();
@@ -19,7 +23,6 @@ router.patch(
     auth,
     ctrlWrapper(ctrl.updateStatusContact),
 );
-
 router.delete("/:contactId", auth, ctrlWrapper(ctrl.removeContact));
 
 module.exports = router;
