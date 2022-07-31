@@ -10,10 +10,8 @@ const { auth } = require(`${basedir}/middlewares`);
 
 const router = express.Router();
 
-// signup
 router.post("/register", ctrlWrapper(ctrl.register));
 
-// signin
 router.post("/login", ctrlWrapper(ctrl.login));
 
 router.get("/current", auth, ctrlWrapper(ctrl.getCurrent));
