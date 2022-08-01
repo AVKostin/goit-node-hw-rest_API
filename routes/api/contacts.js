@@ -2,30 +2,27 @@ const express = require("express");
 
 const { basedir } = global;
 
-const { validation, ctrlWrapper } = require(`${basedir}/middlewares`);
-const { schemas } = require(`${basedir}/models/contact`);
+const { auth } = require(`${basedir}/middlewares`);
+
+const { ctrlWrapper } = require(`${basedir}/helpers`);
+
 const { contacts: ctrl } = require(`${basedir}/controllers`);
 
 const router = express.Router();
 
-router.get("/", ctrlWrapper(ctrl.getAll));
+router.get("/", auth, ctrlWrapper(ctrl.getAll));
 
-router.get("/:contactId", ctrlWrapper(ctrl.getById));
+router.get("/:contactId", auth, ctrlWrapper(ctrl.getById));
 
-router.post("/", validation(schemas.add), ctrlWrapper(ctrl.addContact));
+router.post("/", auth, ctrlWrapper(ctrl.addContact));
 
-router.put(
-    "/:contactId",
-    validation(schemas.add),
-    ctrlWrapper(ctrl.updateContact),
-);
+router.put("/:contactId", auth, ctrlWrapper(ctrl.updateContact));
 
 router.patch(
     "/:contactId/favorite",
-    validation(schemas.updateFavorite),
+    auth,
     ctrlWrapper(ctrl.updateStatusContact),
 );
-
-router.delete("/:contactId", ctrlWrapper(ctrl.removeContact));
+router.delete("/:contactId", auth, ctrlWrapper(ctrl.removeContact));
 
 module.exports = router;
