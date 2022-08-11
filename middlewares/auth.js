@@ -4,8 +4,6 @@ const { basedir } = global;
 
 const { User } = require(`${basedir}/models/user`);
 
-console.log(User);
-
 const { createError } = require(`${basedir}/helpers`);
 
 const { SECRET_KEY } = process.env;
